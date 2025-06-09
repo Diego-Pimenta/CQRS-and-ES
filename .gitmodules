@@ -1,0 +1,3 @@
+[submodule "CQRS"]
+	path = CQRS
+	url = git@github.com:Diego-Pimenta/CQRS.git

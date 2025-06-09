@@ -15,7 +15,7 @@
 	<description>Bank Account Query API Project</description>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
@@ -64,6 +64,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.20</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

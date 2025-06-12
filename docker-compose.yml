@@ -1,6 +1,6 @@
 services:
   zookeeper:
-    image: bitnami/zookeeper
+    image: bitnami/zookeeper:latest
     restart: always
     ports:
       - "2181:2181"
@@ -12,7 +12,7 @@ services:
       - techbankNet
 
   kafka:
-    image: bitnami/kafka
+    image: bitnami/kafka:latest
     restart: always
     ports:
       - "9092:9092"

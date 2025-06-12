@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class AccountEventStore implements EventStore {
     @Autowired
+    private AccountEventProducer eventProducer;
+    @Autowired
     private EventStoreRepository eventStoreRepository;
 
     @Override
@@ -39,8 +41,8 @@ public class AccountEventStore implements EventStore {
                     .eventData(event)
                     .build();
             var persistedEvent = eventStoreRepository.save(eventModel);
-            if (persistedEvent != null) {
-                // TODO: produce event to Kafka
+            if (!persistedEvent.getId().isEmpty()) {
+                eventProducer.produce(event.getClass().getSimpleName(), event);
             }
         }
     }

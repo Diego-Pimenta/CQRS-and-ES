@@ -60,7 +60,7 @@ public class AccountAggregate extends AggregateRoot {
             throw new IllegalStateException("Funds cannot be withdrawn from a closed account!");
         }
 
-        raiseEvent(FundsDepositedEvent.builder()
+        raiseEvent(FundsWithdrawnEvent.builder()
                 .id(id)
                 .amount(amount)
                 .build());

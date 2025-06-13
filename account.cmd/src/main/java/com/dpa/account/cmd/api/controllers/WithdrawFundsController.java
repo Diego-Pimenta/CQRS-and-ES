@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/api/v1/depositFunds")
+@RequestMapping(path = "/api/v1/withdrawFunds")
 public class WithdrawFundsController {
     private final Logger logger = Logger.getLogger(WithdrawFundsController.class.getName());
 

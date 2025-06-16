@@ -5,6 +5,7 @@ import com.dpa.cqrs.core.domain.AggregateRoot;
 import com.dpa.cqrs.core.handlers.EventSourcingHandler;
 import com.dpa.cqrs.core.infrastructure.EventStore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -15,6 +16,9 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
     private EventStore eventStore;
     @Autowired
     private AccountEventProducer eventProducer;
+
+    @Value("%{spring.kafka.topic}")
+    private String topic;
 
     @Override
     public void save(AggregateRoot aggregate) {
@@ -43,7 +47,7 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
 
             var events = eventStore.getEvents(aggregateId);
             for (var event : events) {
-                eventProducer.produce(event.getClass().getSimpleName(), event);
+                eventProducer.produce(topic, event);
             }
         }
     }

@@ -8,6 +8,7 @@ import com.dpa.cqrs.core.exceptions.AggregateNotFoundException;
 import com.dpa.cqrs.core.exceptions.ConcurrencyException;
 import com.dpa.cqrs.core.infrastructure.EventStore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,6 +21,9 @@ public class AccountEventStore implements EventStore {
     private AccountEventProducer eventProducer;
     @Autowired
     private EventStoreRepository eventStoreRepository;
+
+    @Value("%{spring.kafka.topic}")
+    private String topic;
 
     @Override
     public void saveEvents(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {
@@ -42,7 +46,7 @@ public class AccountEventStore implements EventStore {
                     .build();
             var persistedEvent = eventStoreRepository.save(eventModel);
             if (!persistedEvent.getId().isEmpty()) {
-                eventProducer.produce(event.getClass().getSimpleName(), event);
+                eventProducer.produce(topic, event);
             }
         }
     }
@@ -53,7 +57,7 @@ public class AccountEventStore implements EventStore {
         if (eventStream == null || eventStream.isEmpty()) {
             throw new AggregateNotFoundException("Incorrect account ID provided!");
         }
-        return eventStream.stream().map(e -> e.getEventData()).collect(Collectors.toList());
+        return eventStream.stream().map(EventModel::getEventData).collect(Collectors.toList());
     }
 
     @Override

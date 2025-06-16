@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "73c4ef49-76d7-46a0-8fb7-bf92acc6bfcb",
+		"name": "CQRS-and-ES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30036288"
+	},
+	"item": [
+		{
+			"name": "Command",
+			"item": [
+				{
+					"name": "openBankAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountHolder\": \"Diego Pimenta\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"openingBalance\": 200.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/openBankAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"openBankAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "depositFunds",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 50.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/depositFunds/5aa825b4-fe94-4761-b3a0-89798db58384",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"depositFunds",
+								"5aa825b4-fe94-4761-b3a0-89798db58384"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdrawFunds",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 20.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/withdrawFunds/5aa825b4-fe94-4761-b3a0-89798db58384",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"withdrawFunds",
+								"5aa825b4-fe94-4761-b3a0-89798db58384"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "closeBankAccount",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountHolder\": \"Diego Pimenta\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"openingBalance\": 200.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/closeBankAccount/50cb2100-6261-44f7-9fba-9b47f5521e49",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"closeBankAccount",
+								"50cb2100-6261-44f7-9fba-9b47f5521e49"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restoreDb",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/restoreReadDb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"restoreReadDb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Query",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/api/v1/bankAccountLookup/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"v1",
+								"bankAccountLookup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/api/v1/bankAccountLookup/byId/5aa825b4-fe94-4761-b3a0-89798db58384",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"v1",
+								"bankAccountLookup",
+								"byId",
+								"5aa825b4-fe94-4761-b3a0-89798db58384"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findByHolder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/api/v1/bankAccountLookup/byHolder/Diego Pimenta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"v1",
+								"bankAccountLookup",
+								"byHolder",
+								"Diego Pimenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findWithBalance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/api/v1/bankAccountLookup/withBalance/GREATER_THAN/150",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"v1",
+								"bankAccountLookup",
+								"withBalance",
+								"GREATER_THAN",
+								"150"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

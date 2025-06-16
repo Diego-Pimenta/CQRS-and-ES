@@ -13,6 +13,8 @@ import java.util.Comparator;
 public class AccountEventSourcingHandler implements EventSourcingHandler<AccountAggregate> {
     @Autowired
     private EventStore eventStore;
+    @Autowired
+    private AccountEventProducer eventProducer;
 
     @Override
     public void save(AggregateRoot aggregate) {
@@ -30,5 +32,19 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
             aggregate.setVersion(latestVersion.get());
         }
         return aggregate;
+    }
+
+    @Override
+    public void republishEvents() {
+        var aggregatedIds = eventStore.getAggregateIds();
+        for (var aggregateId : aggregatedIds) {
+            var aggregate = getById(aggregateId);
+            if (aggregate == null || !aggregate.getActive()) continue;
+
+            var events = eventStore.getEvents(aggregateId);
+            for (var event : events) {
+                eventProducer.produce(event.getClass().getSimpleName(), event);
+            }
+        }
     }
 }
